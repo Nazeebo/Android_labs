@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:context=".MainActivity">
+
+    <TextView
+            android:id="@+id/text"
+            android:layout_width="match_parent"
+            android:layout_height="41dp"
+            android:layout_margin="5dp"
+            android:gravity="center"
+            android:text="Результат"
+            android:textSize="30dp"
+            app:layout_constraintBottom_toBottomOf="@id/b1"
+            app:layout_constraintHorizontal_bias="0.350"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/firstNum"
+            app:layout_constraintVertical_weight="2" />
+
+    <EditText
+            android:id="@+id/firstNum"
+            android:layout_width="wrap_content"
+            android:layout_height="54dp"
+            android:layout_margin="5dp"
+            android:hint="Введите первое число"
+            android:inputType="number"
+            android:textSize="16dp"
+            app:layout_constraintHorizontal_weight="1"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toLeftOf="@+id/secondNum"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_weight="2" />
+
+    <EditText
+            android:id="@+id/secondNum"
+            android:layout_width="wrap_content"
+            android:layout_height="54dp"
+            android:layout_margin="5dp"
+            android:hint="Введите второе число"
+            android:inputType="number"
+            android:textSize="16dp"
+            app:layout_constraintHorizontal_weight="1"
+            app:layout_constraintLeft_toRightOf="@+id/firstNum"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_weight="2" />
+
+    <Button
+            android:id="@+id/b1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="+"
+            android:gravity="center"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintHorizontal_weight="1"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toLeftOf="@id/b2"
+            app:layout_constraintTop_toBottomOf="@+id/text"
+            app:layout_constraintVertical_bias="0.204"
+            app:layout_constraintVertical_weight="3" />
+
+    <Button
+            android:id="@+id/b2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="-"
+            android:gravity="center"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintHorizontal_weight="1"
+            app:layout_constraintLeft_toRightOf="@id/b1"
+            app:layout_constraintRight_toLeftOf="@id/b3"
+            app:layout_constraintTop_toBottomOf="@+id/text"
+            app:layout_constraintVertical_bias="0.204"
+            app:layout_constraintVertical_weight="3" />
+
+    <Button
+            android:id="@+id/b3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="*"
+            android:gravity="center"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintHorizontal_weight="1"
+            app:layout_constraintLeft_toRightOf="@id/b2"
+            app:layout_constraintRight_toLeftOf="@id/b4"
+            app:layout_constraintTop_toBottomOf="@+id/text"
+            app:layout_constraintVertical_bias="0.203"
+            app:layout_constraintVertical_weight="3" />
+
+    <Button
+            android:id="@+id/b4"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="/"
+            android:gravity="center"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintHorizontal_weight="1"
+            app:layout_constraintLeft_toRightOf="@id/b3"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/text"
+            app:layout_constraintVertical_bias="0.204"
+            app:layout_constraintVertical_weight="3" />
+
+</android.support.constraint.ConstraintLayout>
