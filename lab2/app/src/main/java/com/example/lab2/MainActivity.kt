@@ -9,18 +9,18 @@ import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : AppCompatActivity() {
 
-    private fun buttonPressed( button : String ): View.OnClickListener = View.OnClickListener() { view ->
-        if(firstNum.text.isEmpty() or  secondNum.text.isEmpty())
+    private fun buttonPressed(button: String): View.OnClickListener = View.OnClickListener() { view ->
+        if (firstNum.text.isEmpty() or secondNum.text.isEmpty())
             Snackbar.make(view, "Заполните оба числа", Snackbar.LENGTH_LONG).show()
         else {
             val first = firstNum.text.toString().toInt()
             val second = secondNum.text.toString().toInt()
-            when(button){
-                "+" ->  edit.text = (first + second).toString()
-                "-" ->  edit.text = (first - second).toString()
-                "*" ->  edit.text = (first * second).toString()
-                "/" ->  if(second != 0) edit.text = (first / second).toString()
-                    else edit.text = "inf"
+            when (button) {
+                "+" -> edit.text = (first + second).toString()
+                "-" -> edit.text = (first - second).toString()
+                "*" -> edit.text = (first * second).toString()
+                "/" -> if (second != 0) edit.text = (first / second).toString()
+                else edit.text = "inf"
             }
         }
     }
