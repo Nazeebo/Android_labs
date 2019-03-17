@@ -2,10 +2,14 @@ package com.example.lab3
 
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
+import android.graphics.Matrix
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
-import android.widget.Toast
 import kotlinx.android.synthetic.main.activity_image.*
+import android.media.ExifInterface
+import android.util.Log
+import java.io.IOException
+
 
 class ImageActivity : AppCompatActivity() {
 
@@ -22,31 +26,34 @@ class ImageActivity : AppCompatActivity() {
         text.text = intent.getStringExtra(NAME_KEY)
         photoPath = intent.getStringExtra(IMAGE_KEY)
 
-        setPic()
+        setPhoto()
     }
 
-    private fun setPic() {
-        //imageView.setImageBitmap(BitmapFactory.decodeFile(photoPath))
-        // Get the dimensions of the View
-        val targetW: Int = imageView.maxHeight
-        val targetH: Int = imageView.maxWidth
+    private fun setPhoto() {
+        var bitmap : Bitmap = BitmapFactory.decodeFile(photoPath)
+        try{
+            val exif = ExifInterface(photoPath)
+            val rotation : Int = exif.getAttributeInt(ExifInterface.TAG_ORIENTATION, ExifInterface.ORIENTATION_NORMAL)
+            val rotationInDegrees : Int = exifToDegrees(rotation)
+            val matrix = Matrix()
+            if (rotation != 0) {matrix.preRotate(rotationInDegrees.toFloat())}
+            bitmap = Bitmap.createBitmap(bitmap,0,0, bitmap.width, bitmap.height, matrix, true)
 
-        val bmOptions = BitmapFactory.Options().apply {
-            // Get the dimensions of the bitmap
-            inJustDecodeBounds = true
-            BitmapFactory.decodeFile(photoPath, this)
-            val photoW: Int = outWidth
-            val photoH: Int = outHeight
-
-            // Determine how much to scale down the image
-            val scaleFactor: Int = Math.min(photoW / targetW, photoH / targetH)
-
-            // Decode the image file into a Bitmap sized to fill the View
-            inJustDecodeBounds = false
-            inSampleSize = scaleFactor
         }
-        BitmapFactory.decodeFile(photoPath, bmOptions)?.also { bitmap ->
+        catch(ex: IOException){
+            Log.e("LOG EXIF", "Failed to get Exif data", ex)
+        }
             imageView.setImageBitmap(bitmap)
         }
+
+    private fun exifToDegrees(exifOrientation: Int): Int {
+        return when (exifOrientation) {
+            ExifInterface.ORIENTATION_ROTATE_90 -> 90
+            ExifInterface.ORIENTATION_ROTATE_180 -> 180
+            ExifInterface.ORIENTATION_ROTATE_270 -> 270
+            else -> 0
+        }
     }
-}
+    }
+
+

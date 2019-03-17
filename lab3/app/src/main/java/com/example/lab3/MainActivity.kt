@@ -2,8 +2,6 @@ package com.example.lab3
 
 import android.app.Activity
 import android.content.Intent
-import android.graphics.Bitmap
-import android.media.Image
 import android.net.Uri
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
@@ -11,18 +9,21 @@ import android.os.Environment
 import android.provider.MediaStore
 import android.support.design.widget.Snackbar
 import android.support.v4.content.FileProvider
-import android.widget.Toast
 import kotlinx.android.synthetic.main.activity_main.*
 import java.io.File
 import java.io.IOException
-import java.nio.channels.InterruptedByTimeoutException
 import java.text.SimpleDateFormat
 import java.util.*
 
 class MainActivity : AppCompatActivity() {
     val REQUEST_IMAGE_CAPTURE = 1
-    lateinit var name : String
-    lateinit var currentPhotoPath : String
+    var name : String = ""
+    var currentPhotoPath : String = ""
+
+    companion object {
+        val KEY_NAME = "key_name"
+        val KEY_PATH = "key_path"
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -50,7 +51,6 @@ class MainActivity : AppCompatActivity() {
                             )
                             takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, photoURI)
                             startActivityForResult(takePictureIntent, REQUEST_IMAGE_CAPTURE)
-                            Toast.makeText(applicationContext, "cделали фотку", Toast.LENGTH_LONG).show()
                         }
                     }
                 }
@@ -74,9 +74,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        Toast.makeText(applicationContext, "onActivityResult", Toast.LENGTH_LONG).show()
         if (requestCode == REQUEST_IMAGE_CAPTURE && resultCode == Activity.RESULT_OK) {
-            Toast.makeText(applicationContext, "cледующий мув", Toast.LENGTH_LONG).show()
             val intentTwo = Intent(applicationContext, ImageActivity::class.java)
 
             intentTwo.putExtra(ImageActivity.IMAGE_KEY, currentPhotoPath)
@@ -84,5 +82,19 @@ class MainActivity : AppCompatActivity() {
             startActivity(intentTwo)
         }
         super.onActivityResult(requestCode, resultCode, data)
+    }
+
+    override fun onSaveInstanceState(outState: Bundle?) {
+        outState!!.putString(KEY_NAME, name)
+        outState.putString(KEY_PATH, currentPhotoPath)
+
+        super.onSaveInstanceState(outState)
+    }
+
+    override fun onRestoreInstanceState(savedInstanceState: Bundle?) {
+        super.onRestoreInstanceState(savedInstanceState)
+
+        name = savedInstanceState!!.getString(KEY_NAME).orEmpty()
+        currentPhotoPath = savedInstanceState.getString(KEY_PATH).orEmpty()
     }
 }
