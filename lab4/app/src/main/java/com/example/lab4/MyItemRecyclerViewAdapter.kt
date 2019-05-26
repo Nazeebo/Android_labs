@@ -8,7 +8,7 @@ import android.widget.TextView
 
 
 import com.example.lab4.ItemFragment.OnListFragmentInteractionListener
-import com.example.lab4.dummy.WeatherContent
+import com.example.lab4.dummy.WeatherContent.DayWeatherItem
 import com.example.lab4.dummy.WeatherContent.WeatherItem
 
 import kotlinx.android.synthetic.main.fragment_item.view.*
@@ -18,7 +18,7 @@ import kotlinx.android.synthetic.main.fragment_item.view.*
  * specified [OnListFragmentInteractionListener]. */
 
 class MyItemRecyclerViewAdapter(
-    private val mValues: List<WeatherItem>,
+    private var mValues: List<Pair<String,DayWeatherItem>>,
     private val mListener: OnListFragmentInteractionListener?
 ) : RecyclerView.Adapter<MyItemRecyclerViewAdapter.ViewHolder>() {
 
@@ -26,7 +26,7 @@ class MyItemRecyclerViewAdapter(
 
     init {
         mOnClickListener = View.OnClickListener { v ->
-            val item = v.tag as WeatherItem
+            val item = v.tag as Pair<String, DayWeatherItem>
             val position = mValues.indexOf(item)
             // Notify the active callbacks interface (the activity, if the fragment is attached to
             // one) that an item has been selected.
@@ -44,17 +44,9 @@ class MyItemRecyclerViewAdapter(
     //Replace the content of the views (invoked by the layout manager)
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val item = mValues[position]
-        holder.mDate.text = item.date
-        val tod:String =  when(item.tod){
-            "0" -> "ночь"
-            "1" -> "утро"
-            "2" -> "день"
-            "3" -> "вечер"
-            else -> item.tod
-        }
-        WeatherContent.ITEMS[position].tod = tod
-        holder.mDayPart.text = tod
-        holder.mTemp.text = item.temp
+        holder.mDate.text = item.first
+        holder.mFeel.text = "Ощущается: " + item.second.feel_map["2"]
+        holder.mTemp.text = item.second.temp_map["2"]
 
         with(holder.mView) {
             tag = item
@@ -62,13 +54,17 @@ class MyItemRecyclerViewAdapter(
         }
     }
 
+    fun clear(){
+        mValues.
+    }
+
     // Return the size of your dataset (invoked by the layout manager)
     override fun getItemCount(): Int = mValues.size
 
     inner class ViewHolder(val mView: View) : RecyclerView.ViewHolder(mView) {
         val mDate: TextView = mView.date
-        val mDayPart: TextView = mView.dayPart
         val mTemp: TextView = mView.temperature
+        val mFeel : TextView = mView.feel
 
         override fun toString(): String {
             return super.toString() + " '" + mTemp.text + "'"

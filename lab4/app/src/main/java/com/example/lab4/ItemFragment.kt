@@ -1,8 +1,10 @@
 package com.example.lab4
 
 import android.content.Context
+import android.content.res.Configuration
 import android.os.Bundle
 import android.support.v4.app.Fragment
+import android.support.v7.widget.DividerItemDecoration
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
@@ -14,6 +16,7 @@ import com.example.lab4.dummy.WeatherContent
 class ItemFragment : Fragment() {
 
     private var listener: OnListFragmentInteractionListener? = null
+    private var list : List<Pair<String, WeatherContent.DayWeatherItem>> = ArrayList()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -25,11 +28,13 @@ class ItemFragment : Fragment() {
         if (view is RecyclerView) {
             with(view) {
                 layoutManager =  LinearLayoutManager(context)
-                adapter = MyItemRecyclerViewAdapter(WeatherContent.ITEMS, listener)
+                adapter = MyItemRecyclerViewAdapter(list, listener)
+                addItemDecoration(DividerItemDecoration(context, Configuration.ORIENTATION_PORTRAIT))
             }
         }
         return view
     }
+
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
@@ -43,6 +48,10 @@ class ItemFragment : Fragment() {
     override fun onDetach() {
         super.onDetach()
         listener = null
+    }
+
+    fun setList(list: List<Pair<String, WeatherContent.DayWeatherItem>>){
+        this.list = list
     }
 
     interface OnListFragmentInteractionListener {

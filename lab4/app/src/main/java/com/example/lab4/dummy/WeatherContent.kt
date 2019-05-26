@@ -5,9 +5,12 @@ import java.util.ArrayList
 object WeatherContent {
 
     var ITEMS: MutableList<WeatherItem> = ArrayList()
+    var INFO: MutableMap<String,DayWeatherItem> = HashMap()
 
-    //private val ITEM_MAP: MutableMap<String, WeatherItem> = HashMap()
-
+    fun processingData(){
+        for(item: WeatherItem in ITEMS)
+            addInfoToDayItem(item)
+    }
 
     /*init {
         // Add some sample items.
@@ -16,13 +19,29 @@ object WeatherContent {
         addItem(createWeatherItem("15.12.14","night","+5", "weak", "\u042f\u0441\u043d\u043e", "20", "755"))
     }*/
 
-    private fun addItem(item: WeatherItem) {
-        ITEMS.add(item)
+    private fun addInfoToDayItem(item: WeatherItem) {
+        if(INFO[item.date] != null){
+            INFO[item.date]!!.temp_map[item.tod] = item.temp
+            INFO[item.date]!!.feel_map[item.tod] = item.feel
+            if(item.tod == "2"){
+                INFO[item.date]!!.humidity = item.humidity
+                INFO[item.date]!!.cloud = item.cloud
+                INFO[item.date]!!.pressure = item.pressure
+                INFO[item.date]!!.wind = item.wind
+            }
+        }
+        else
+            INFO[item.date] = createDayWeatherItem(item)
     }
 
-    private fun createWeatherItem(date: String, tod: String, temp : String, wind: String, cloud: String, humidity: String, pressure: String): WeatherItem {
-        return WeatherItem(date, tod, temp, wind, cloud, humidity, pressure)
+    private fun createDayWeatherItem(item: WeatherItem): DayWeatherItem {
+        val tmp = HashMap<String, String>(4)
+        val fl = HashMap<String, String>(4)
+        tmp[item.tod] = item.temp
+        fl[item.tod] = item.feel
+        return DayWeatherItem(tmp,fl, item.wind, item.cloud, item.humidity, item.pressure)
     }
 
-    data class WeatherItem(val date: String, var tod: String, val temp: String, val wind: String, val cloud: String, val humidity: String, val pressure: String)
+    data class WeatherItem(val date: String, val feel:String, var tod: String, val temp: String, val wind: String, val cloud: String, val humidity: String, val pressure: String)
+    data class DayWeatherItem(val temp_map: MutableMap<String, String>, val feel_map: MutableMap<String, String>, var wind: String, var cloud: String, var humidity: String, var pressure: String)
 }
