@@ -21,7 +21,6 @@ class ItemFragment : Fragment() {
 
     private var listener: OnListFragmentInteractionListener? = null
     var refresh : OnRefreshListener? = null
-    //private var list: List<Pair<String, WeatherContent.DayWeatherItem>> = ArrayList()
     lateinit var swipeContainer: SwipeRefreshLayout
     private lateinit var recycle : RecyclerView
     private lateinit var myAdapter : MyItemRecyclerViewAdapter
@@ -69,10 +68,6 @@ class ItemFragment : Fragment() {
     fun setList(newList: List<Pair<String, WeatherContent.DayWeatherItem>>) {
         myAdapter.clear()
         myAdapter.addAll(newList)
-    }
-
-    fun clearList(){
-        myAdapter.clear()
     }
 
     interface OnListFragmentInteractionListener {

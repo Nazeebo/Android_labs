@@ -17,7 +17,7 @@ import retrofit2.Response
 class DataHelper constructor(val context: Context) {
 
     private val TAG = "DataHelper"
-    private val KEY = "json"
+    private val KEY = "WeatherInfo"
 
     fun saveWeatherInfo() {
         val prefEditor = PreferenceManager.getDefaultSharedPreferences(context)
@@ -45,8 +45,8 @@ class DataHelper constructor(val context: Context) {
 
     fun getData(fragment: ItemFragment) {
         val apiHelper = ApiHelper.create()
-        //val call = apiHelper.getWeatherInfo(24)
-        val call = apiHelper.getWeatherInfo()
+        //val call = apiHelper.getWeatherInfo()
+        val call = apiHelper.getWeatherInfo(24)
             .enqueue(object : Callback<List<WeatherContent.WeatherItem>> {
                 override fun onFailure(call: Call<List<WeatherContent.WeatherItem>>, t: Throwable) {
                     Toast.makeText(context, t.toString(), Toast.LENGTH_LONG).show()

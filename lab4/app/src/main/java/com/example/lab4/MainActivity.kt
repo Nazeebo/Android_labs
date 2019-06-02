@@ -1,31 +1,16 @@
 package com.example.lab4
 
-import android.content.Context
 import android.content.Intent
 import android.content.res.Configuration
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
-import android.preference.PreferenceManager
-import android.provider.ContactsContract
-import android.support.design.widget.Snackbar
 import android.util.Log
-import android.view.View
-import com.example.lab4.dummy.WeatherContent
-import com.example.lab4.helpers.ApiHelper
 import com.example.lab4.helpers.DataHelper
-import com.google.gson.Gson
-import com.google.gson.reflect.TypeToken
-import kotlinx.android.synthetic.main.activity_main.*
-import retrofit2.Call
-import retrofit2.Callback
-import retrofit2.Response
-import java.io.File
-import java.nio.charset.Charset
 
 class MainActivity : AppCompatActivity(), ItemFragment.OnListFragmentInteractionListener, ItemFragment.OnRefreshListener {
 
     private val TAG: String = "MainActivity"
-    private val KEY: String = "WeatherInfo"
+    private val KEY: String = ""
     private lateinit var data : DataHelper
 
     val fragment = ItemFragment()
