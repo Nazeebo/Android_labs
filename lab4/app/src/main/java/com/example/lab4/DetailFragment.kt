@@ -12,15 +12,14 @@ import kotlinx.android.synthetic.main.fragment_detail.*
 import kotlin.collections.ArrayList
 
 
-
 class DetailFragment : Fragment() {
     private var items = ArrayList<String>()
     private val TAG = "DetailFragment"
 
-    fun showDetailInfo(){
+    fun showDetailInfo() {
         items.clear()
         val position = arguments?.getInt(ARG_POSITION)
-        if(position != null){
+        if (position != null) {
             val item = WeatherContent.INFO.toList().sortedBy { it.first }[position]
             items.add("Дата: " + item.first)
             items.add("Ночь: " + item.second.temp_map["0"] + "   Ощущается: " + item.second.feel_map["0"])

@@ -18,7 +18,7 @@ import kotlinx.android.synthetic.main.fragment_item.view.*
  * specified [OnListFragmentInteractionListener]. */
 
 class MyItemRecyclerViewAdapter(
-    private var mValues: List<Pair<String,DayWeatherItem>>,
+    private var mValues: MutableList<Pair<String, DayWeatherItem>>,
     private val mListener: OnListFragmentInteractionListener?
 ) : RecyclerView.Adapter<MyItemRecyclerViewAdapter.ViewHolder>() {
 
@@ -54,8 +54,14 @@ class MyItemRecyclerViewAdapter(
         }
     }
 
-    fun clear(){
-        mValues.
+    fun clear() {
+        mValues.clear()
+        notifyDataSetChanged()
+    }
+
+    fun addAll(list: List<Pair<String, DayWeatherItem>>) {
+        mValues.addAll(list)
+        notifyDataSetChanged()
     }
 
     // Return the size of your dataset (invoked by the layout manager)
@@ -64,7 +70,7 @@ class MyItemRecyclerViewAdapter(
     inner class ViewHolder(val mView: View) : RecyclerView.ViewHolder(mView) {
         val mDate: TextView = mView.date
         val mTemp: TextView = mView.temperature
-        val mFeel : TextView = mView.feel
+        val mFeel: TextView = mView.feel
 
         override fun toString(): String {
             return super.toString() + " '" + mTemp.text + "'"
