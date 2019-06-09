@@ -8,6 +8,8 @@ object WeatherContent {
     var INFO: MutableMap<String, DayWeatherItem> = HashMap()
 
     fun processingData() {
+        INFO.clear()
+
         for (item: WeatherItem in ITEMS)
             addInfoToDayItem(item)
     }
